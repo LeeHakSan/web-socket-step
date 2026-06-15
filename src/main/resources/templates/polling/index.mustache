@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        * {box-sizing: border-box}
+        * {
+            box-sizing: border-box
+        }
+
         body {
             margin: 20px;
             background-color: #f5f5f5;
@@ -15,6 +18,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .container {
             width: 500px;
             height: 600px;
@@ -26,12 +30,14 @@
 
             overflow: hidden;
         }
+
         .header {
             background-color: #385ea3;
             color: white;
             text-align: center;
             padding: 15px;
         }
+
         .chat-box {
             flex: 1;
             background-color: white;
@@ -46,12 +52,14 @@
             align-items: flex-start;
             margin-bottom: 15px;
         }
+
         .name {
             font-size: 12px;
             color: #888;
             margin-bottom: 5px;
             margin-left: 5px;
         }
+
         .msg {
             background-color: #e9e9eb;
             padding: 10px 15px;
@@ -68,23 +76,26 @@
             display: flex;
             gap: 10px;
         }
+
         .input-sender {
             width: 80px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .input-msg {
             flex: 1;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .btn-send {
             background-color: #385ea3;
             color: white;
             border-radius: 5px;
-            border : none;
+            border: none;
             padding: 10px;
             cursor: pointer;
         }
@@ -96,16 +107,18 @@
         <h3>Polling 채팅방</h3>
         <p>주기적인 새로고침</p>
     </div>
-    <div class="chat-box">
+    <div class="chat-box" id="chat-box">
 
         <!-- 반복문 처리 예정     -->
-        <div class="msg-wrap">
-            <div class="msg-box">
-                <span class="name">홍길동</span>
-                <span class="msg">반가워~~</span>
+        {{#chatList}}
+
+            <div class="msg-wrap">
+                <div class="msg-box">
+                    <span class="name">{{sender}}</span>
+                    <span class="msg">{{message}}</span>
+                </div>
             </div>
-        </div>
-        <!--            -->
+        {{/chatList}}
         <div class="msg-wrap">
             <div class="msg-box">
                 <span class="name">이순신</span>
@@ -114,12 +127,22 @@
         </div>
     </div>
 
-    <form action="/polling/chat" method="post" class="input-area" >
+    <form action="/polling/chat" method="post" class="input-area">
         <input type="text" name="sender" class="input-sender" value="익명" required>
         <input type="text" name="message" class="input-msg" placeholder="내용을 입력" autofocus required>
         <button type="submit" class="btn-send">전송</button>
     </form>
 
 </div>
+<script>
+    // 1. 스크롤 바 바닥 고정
+    const chatBox = document.getElementById("chat-box");
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 2. 폴링 로직 (3초 마다 새로고침 실행)
+    setTimeout(() => {
+        location.reload();
+    }, 3000);
+</script>
 </body>
 </html>
